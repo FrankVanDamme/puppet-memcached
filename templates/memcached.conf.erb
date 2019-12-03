@@ -37,6 +37,10 @@ logfile <%= @log_file %>
 # Limit the number of simultaneous incoming connections. The daemon default is 1024
 <%= "#" unless @connection_limit.to_s != "1024" %> -c <%= @connection_limit %>
 
+<% if defined?(@socket) -%>
+-s  <%= @socket %>
+<% end -%>
+
 # Lock down all paged memory. Consult with the README and homepage before you do this
 # -k
 
