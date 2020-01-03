@@ -24,7 +24,7 @@
 # Copyright 2015 Joshua B. Bussdieker, unless otherwise noted.
 #
 class memcached(
-  $enable_memcached   = 'yes',
+  $enable_default_memcached = 'yes',
   $log_file           = '/var/log/memcached.log',
   $memory_max         = 64,
   $listen_port        = 11211,
@@ -55,6 +55,25 @@ class memcached(
     exec { "memcached_refresh_systemd":
 	command     => "/bin/systemctl daemon-reload",
 	refreshonly => true,
+    }
+
+    case $enable_default_memcached {
+        'no': { 
+            $enable = false 
+            $ensure = stopped
+        }
+        'yes': { 
+            $enable = true 
+            $ensure = running
+        }
+        default: {
+            fail("enable_default_memcached should be 'yes' or 'no' (with quotes)!")
+        }
+    }
+
+    service { "memcached":
+        ensure => $ensure,
+        enable => $enable,
     }
 
     Memcached::Instance <| |>

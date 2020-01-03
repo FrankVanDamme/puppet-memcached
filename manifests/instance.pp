@@ -10,7 +10,6 @@ define memcached::instance (
   Boolean $privatetmp = $memcached::privatetmp,
 ){
     memcached::config { "$name":
-        enable_memcached => $enable_memcached,
         log_file         => $log_file,
         memory_max       => $memory_max,
         listen_port      => $listen_port,

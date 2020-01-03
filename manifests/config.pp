@@ -1,6 +1,5 @@
 # == Class: memcached::config
 define memcached::config (
-  $enable_memcached,
   $log_file,
   $memory_max,
   $listen_port,

@@ -1,6 +1,6 @@
 # == Class: memcached::service
 define memcached::service ( 
-    $enable_memcached = 'yes' 
+    $enable_memcached = 'yes'
 ) {
     $label=$name
     $jobname="memcached_$label"
@@ -12,15 +12,23 @@ define memcached::service (
         tag     => $tag,
     }
 
+    case $enable_memcached {
+        'no': { 
+            $enable = false 
+            $ensure = stopped
+        }
+        'yes': { 
+            $enable = true 
+            $ensure = running
+        }
+        default: {
+            fail("enable_memcached should be 'yes' or 'no' (with quotes)!")
+        }
+    }
 
-  case $enable_memcached {
-    'no'   : { $enable = false }
-    default: { $enable = true }
-  }
-
-  service { "memcached_$name":
-    ensure => running,
-    enable => $enable,
-  }
+    service { "memcached_$name":
+        ensure => $ensure,
+        enable => $enable,
+    }
 
 }
