@@ -33,6 +33,7 @@ class memcached(
   $connection_limit   = 1024,
   $socket             = undef,
   Boolean $privatetmp = true,
+  $mask               = '700',
 ) {
     class { 'memcached::package':
     }

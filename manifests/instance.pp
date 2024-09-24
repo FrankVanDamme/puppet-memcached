@@ -8,6 +8,7 @@ define memcached::instance (
   $connection_limit   = $memcached::connection_limit,
   $socket             = $memcached::socket,
   Boolean $privatetmp = $memcached::privatetmp,
+  $mask               = $memcached::mask,
 ){
     memcached::config { "$name":
         log_file         => $log_file,
@@ -19,6 +20,7 @@ define memcached::instance (
         socket           => $socket,
         notify           => Memcached::Service["$name"],
         require          => Class['memcached::package'],
+        mask             => $mask,
     }
 
     memcached::service { "$name":

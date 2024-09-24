@@ -7,10 +7,11 @@ define memcached::config (
   $memcache_user,
   $connection_limit,
   $socket,
+  $mask,
 ){
 
 
-  file { "/etc/memcached.$name.conf":
+  file { "/etc/memcached.${name}.conf":
     ensure  => present,
     owner   => 'root',
     group   => 'root',
