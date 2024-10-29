@@ -9,7 +9,6 @@ define memcached::service (
         content => template("$module_name/memcached.systemd.erb"),
         notify  => Exec['memcached_refresh_systemd'],
         purge   => true,
-        tag     => $tag,
     }
 
     case $enable_memcached {
