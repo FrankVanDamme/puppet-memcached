@@ -39,10 +39,10 @@ class memcached(
     }
 
     file { '/etc/memcached':
-        ensure  => directory,
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0655',
+        ensure => directory,
+        owner  => 'root',
+        group  => 'root',
+        mode   => '0655',
     }
 
     file { '/etc/default/memcached':
@@ -54,17 +54,17 @@ class memcached(
     }
 
     exec { "memcached_refresh_systemd":
-	command     => "/bin/systemctl daemon-reload",
-	refreshonly => true,
+        command     => "/bin/systemctl daemon-reload",
+        refreshonly => true,
     }
 
     case $enable_default_memcached {
-        'no': { 
-            $enable = false 
+        'no': {
+            $enable = false
             $ensure = stopped
         }
-        'yes': { 
-            $enable = true 
+        'yes': {
+            $enable = true
             $ensure = running
         }
         default: {
