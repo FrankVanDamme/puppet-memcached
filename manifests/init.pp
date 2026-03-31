@@ -66,7 +66,16 @@ class memcached(
         'yes': {
             $enable = true
             $ensure = running
+
+            file { "/etc/memcached.conf":
+                ensure  => present,
+                owner   => 'root',
+                group   => 'root',
+                mode    => '0644',
+                content => template('memcached/memcached.conf.erb'),
+            }
         }
+
         default: {
             fail("enable_default_memcached should be 'yes' or 'no' (with quotes)!")
         }
